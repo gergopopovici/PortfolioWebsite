@@ -1,17 +1,19 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    headers: {
+      'Content-Type': 'application/javascript',
+    },
+  },
   build: {
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.endsWith('.js')) {
-            return 'application/javascript';
-          }
-        },
+        entryFileNames: 'assets/[name].js',
+        chunkFileNames: 'assets/[name].js',
+        assetFileNames: 'assets/[name].[ext]',
       },
     },
   },
