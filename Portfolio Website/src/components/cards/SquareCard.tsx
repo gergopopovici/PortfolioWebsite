@@ -15,7 +15,6 @@ import {
   useTheme,
 } from '@mui/material';
 import { ChevronLeft, ChevronRight, Github } from 'lucide-react';
-import { title } from 'process';
 
 const projects = [
   {
@@ -72,13 +71,15 @@ export default function Projects() {
 
   const handleNextImage = () => {
     if (selectedProject) {
-      setCurrentImageIndex((prev) => (prev + 1) % selectedProject.images.length);
+      setCurrentImageIndex((prev) => (prev + 1) % (selectedProject.images?.length || 1));
     }
   };
 
   const handlePrevImage = () => {
     if (selectedProject) {
-      setCurrentImageIndex((prev) => (prev - 1 + selectedProject.images.length) % selectedProject.images.length);
+      setCurrentImageIndex(
+        (prev) => (prev - 1 + (selectedProject.images?.length ?? 1)) % (selectedProject.images?.length ?? 1),
+      );
     }
   };
 
@@ -140,7 +141,7 @@ export default function Projects() {
                   </IconButton>
                 </Box>
                 <img
-                  src={selectedProject.images[currentImageIndex]}
+                  src={selectedProject.images?.[currentImageIndex]}
                   alt={`${selectedProject.title} screenshot ${currentImageIndex + 1}`}
                   style={{ width: '100%', maxWidth: '500px', borderRadius: '8px' }}
                 />
